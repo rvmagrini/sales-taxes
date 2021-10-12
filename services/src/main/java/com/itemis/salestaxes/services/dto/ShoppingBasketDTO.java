@@ -1,14 +1,17 @@
 package com.itemis.salestaxes.services.dto;
 
+import lombok.Builder;
 import lombok.Data;
+import lombok.Singular;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Data
+@Builder
 public class ShoppingBasketDTO {
 
-    private List<ShoppingBasketItemDTO> items = new ArrayList<>();
+    @Singular
+    private List<ShoppingBasketItemDTO> items;
 
 
 }

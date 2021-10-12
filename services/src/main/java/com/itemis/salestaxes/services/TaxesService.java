@@ -6,6 +6,10 @@ import com.itemis.salestaxes.services.dto.ShoppingBasketDTO;
 public class TaxesService {
 
     public ReceiptDTO calculateTaxes(ShoppingBasketDTO givenShoppingBasket) {
-        return new ReceiptDTO(givenShoppingBasket, 1.50, 29.83);
+        return ReceiptDTO.builder()
+                .shoppingBasket(givenShoppingBasket)
+                .salesTaxes(1.50)
+                .total(29.83)
+                .build();
     }
 }

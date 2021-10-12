@@ -1,18 +1,14 @@
 package com.itemis.salestaxes.services.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
+import lombok.Builder;
+import lombok.Data;
 
-@AllArgsConstructor
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Data
+@Builder
 public class ReceiptDTO {
 
     private ShoppingBasketDTO shoppingBasket;
-
-    @EqualsAndHashCode.Include
     private Double salesTaxes;
-
-    @EqualsAndHashCode.Include
     private Double total;
 }
 
