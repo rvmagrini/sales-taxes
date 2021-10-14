@@ -5,29 +5,30 @@ import com.itemis.salestaxes.services.domain.TaxExemptionType;
 import com.itemis.salestaxes.services.dto.ReceiptDTO;
 import com.itemis.salestaxes.services.dto.ShoppingBasketDTO;
 
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.util.Locale;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class TaxesService {
 
-    private Double baseTax = 10.0;
-    private Double importTax = 5.0;
+    private BigDecimal baseTax = new BigDecimal("10.00");
+    private BigDecimal importTax = new BigDecimal("5.00");
 
     public ReceiptDTO calculateTaxes(ShoppingBasketDTO givenShoppingBasket) {
 
-        final Double[] total = {0.0};
-        final Double[] totalTax = {0.0};
+        final BigDecimal[] total = {BigDecimal.ZERO};
+        final BigDecimal[] totalTax = {BigDecimal.ZERO};
 
         givenShoppingBasket.getItems().forEach(
                 item -> {
-                    Double taxOnItem =
-                            roundValue((item.getPrice() * (
-                                    (item.getProduct().getTaxExemptionType() == TaxExemptionType.EXEMPT ? 0.0 : baseTax) +
-                                    (item.getSaleType() == SaleType.IMPORTED ? (importTax) : 0.0))) / 100);
-                    total[0] += (item.getPrice() * item.getQuantity()) + taxOnItem;
-                    totalTax[0] += taxOnItem;
-                    item.setPrice(twoDecimalPlaces(item.getPrice() + taxOnItem));
+                    BigDecimal taxOnItem =
+                            roundValue(item.getPrice()
+                                    .multiply((item.getProduct().getTaxExemptionType() == TaxExemptionType.EXEMPT ? BigDecimal.ZERO : baseTax)
+                                    .add(item.getSaleType() == SaleType.IMPORTED ? importTax : BigDecimal.ZERO))
+                                    .divide(new BigDecimal("100.00")));
+
+                    total[0] = total[0].add(item.getPrice().multiply(item.getQuantity()).add(taxOnItem));
+                    totalTax[0] = totalTax[0].add(taxOnItem);
+                    item.setPrice(twoDecimalPlaces(item.getPrice().add(taxOnItem)));
                 }
         );
 
@@ -38,14 +39,17 @@ public class TaxesService {
                 .build();
     }
 
-    private Double twoDecimalPlaces(Double value) {
-        DecimalFormat decimalFormat = new DecimalFormat("#.00");
-        decimalFormat.setDecimalFormatSymbols(DecimalFormatSymbols.getInstance(Locale.ENGLISH));
-        return Double.parseDouble(decimalFormat.format(value));
+    private BigDecimal twoDecimalPlaces(BigDecimal value) {
+        return value.setScale(2, RoundingMode.CEILING);
     }
 
-    private double roundValue(Double value) {
-        return Math.round(value * 20) / 20.0;
+    private BigDecimal roundValue(BigDecimal value) {
+                // Divide by 20
+        return value.multiply(new BigDecimal("20.00"))
+                // Round up to the nearest integer
+                .setScale(0, RoundingMode.HALF_UP)
+                // Then divide by 20
+                .divide(new BigDecimal("20.00"));
     }
 
 }

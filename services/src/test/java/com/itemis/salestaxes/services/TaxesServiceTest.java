@@ -11,6 +11,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
+import java.math.BigDecimal;
+
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class TaxesServiceTest {
 
@@ -31,8 +33,8 @@ class TaxesServiceTest {
                                                 .name("Box of Chocolates")
                                                 .taxExemptionType(TaxExemptionType.EXEMPT)
                                                 .build())
-                                        .price(10.00)
-                                        .quantity(1)
+                                        .price(new BigDecimal("10.00"))
+                                        .quantity(new BigDecimal("1.00"))
                                         .saleType(SaleType.IMPORTED)
                                         .build()
                         )
@@ -41,8 +43,8 @@ class TaxesServiceTest {
                                         .product(ProductDTO.builder()
                                                 .name("Bottle of Perfume")
                                                 .build())
-                                        .price(47.50)
-                                        .quantity(1)
+                                        .price(new BigDecimal("47.50"))
+                                        .quantity(new BigDecimal("1.00"))
                                         .saleType(SaleType.IMPORTED)
                                         .build()
                         )
@@ -59,8 +61,8 @@ class TaxesServiceTest {
                                                                 .name("Box of Chocolates")
                                                                 .taxExemptionType(TaxExemptionType.EXEMPT)
                                                                 .build())
-                                                        .price(10.50)
-                                                        .quantity(1)
+                                                        .price(new BigDecimal("10.50"))
+                                                        .quantity(new BigDecimal("1.00"))
                                                         .saleType(SaleType.IMPORTED)
                                                         .build()
                                         )
@@ -69,15 +71,15 @@ class TaxesServiceTest {
                                                         .product(ProductDTO.builder()
                                                                 .name("Bottle of Perfume")
                                                                 .build())
-                                                        .price(54.65)
-                                                        .quantity(1)
+                                                        .price(new BigDecimal("54.65"))
+                                                        .quantity(new BigDecimal("1.00"))
                                                         .saleType(SaleType.IMPORTED)
                                                         .build()
                                         )
                                         .build()
                         )
-                        .salesTaxes(7.65)
-                        .total(65.15)
+                        .salesTaxes(new BigDecimal("7.65"))
+                        .total(new BigDecimal("65.15"))
                         .build();
 
         Assertions.assertEquals(expectedReceipt, actualReceipt);
@@ -95,8 +97,8 @@ class TaxesServiceTest {
                                                 .name("Book")
                                                 .taxExemptionType(TaxExemptionType.EXEMPT)
                                                 .build())
-                                        .price(12.49)
-                                        .quantity(1)
+                                        .price(new BigDecimal("12.49"))
+                                        .quantity(new BigDecimal("1.00"))
                                         .build()
                         )
                         .item(
@@ -104,8 +106,8 @@ class TaxesServiceTest {
                                         .product(ProductDTO.builder()
                                                 .name("Music CD")
                                                 .build())
-                                        .price(14.99)
-                                        .quantity(1)
+                                        .price(new BigDecimal("14.99"))
+                                        .quantity(new BigDecimal("1.00"))
                                         .build()
                         )
                         .item(
@@ -114,8 +116,8 @@ class TaxesServiceTest {
                                                 .name("Chocolate Bar")
                                                 .taxExemptionType(TaxExemptionType.EXEMPT)
                                                 .build())
-                                        .price(0.85)
-                                        .quantity(1)
+                                        .price(new BigDecimal("0.85"))
+                                        .quantity(new BigDecimal("1.00"))
                                         .build()
                         )
                         .build();
@@ -131,8 +133,8 @@ class TaxesServiceTest {
                                                 .name("Book")
                                                 .taxExemptionType(TaxExemptionType.EXEMPT)
                                                 .build())
-                                        .price(12.49)
-                                        .quantity(1)
+                                        .price(new BigDecimal("12.49"))
+                                        .quantity(new BigDecimal("1.00"))
                                         .build()
                         )
                         .item(
@@ -140,8 +142,8 @@ class TaxesServiceTest {
                                         .product(ProductDTO.builder()
                                                 .name("Music CD")
                                                 .build())
-                                        .price(16.49)
-                                        .quantity(1)
+                                        .price(new BigDecimal("16.49"))
+                                        .quantity(new BigDecimal("1.00"))
                                         .build()
                         )
                         .item(
@@ -150,14 +152,14 @@ class TaxesServiceTest {
                                                 .name("Chocolate Bar")
                                                 .taxExemptionType(TaxExemptionType.EXEMPT)
                                                 .build())
-                                        .price(0.85)
-                                        .quantity(1)
+                                        .price(new BigDecimal("0.85"))
+                                        .quantity(new BigDecimal("1.00"))
                                         .build()
                         )
                         .build()
                 )
-                .salesTaxes(1.50)
-                .total(29.83)
+                .salesTaxes(new BigDecimal("1.50"))
+                .total(new BigDecimal("29.83"))
                 .build();
 
         Assertions.assertEquals(expectedReceipt, actualReceipt);
