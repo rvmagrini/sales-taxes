@@ -23,6 +23,110 @@ class TaxesServiceTest {
         service = new TaxesService();
     }
 
+    // Input 3
+    @Test
+    void givenShoppingBasketWithFourDifferentCases_whenCalculateTaxes_thenReturnReceipt() {
+        ShoppingBasketDTO givenShoppingBasket =
+                ShoppingBasketDTO.builder()
+                        .item(
+                                ShoppingBasketItemDTO.builder()
+                                        .product(ProductDTO.builder()
+                                                .name("Bottle of Perfume")
+                                                .build())
+                                        .price(new BigDecimal("27.99"))
+                                        .quantity(new BigDecimal("1.00"))
+                                        .saleType(SaleType.IMPORTED)
+                                        .build()
+                        )
+                        .item(
+                                ShoppingBasketItemDTO.builder()
+                                        .product(ProductDTO.builder()
+                                                .name("Bottle of Perfume")
+                                                .build())
+                                        .price(new BigDecimal("18.99"))
+                                        .quantity(new BigDecimal("1.00"))
+                                        .build()
+                        )
+                        .item(
+                                ShoppingBasketItemDTO.builder()
+                                        .product(ProductDTO.builder()
+                                                .name("Packet of Headache Pills")
+                                                .taxExemptionType(TaxExemptionType.EXEMPT)
+                                                .build())
+                                        .price(new BigDecimal("9.75"))
+                                        .quantity(new BigDecimal("1.00"))
+                                        .build()
+                        )
+                        .item(
+                                ShoppingBasketItemDTO.builder()
+                                        .product(ProductDTO.builder()
+                                                .name("Box of Chocolate")
+                                                .taxExemptionType(TaxExemptionType.EXEMPT)
+                                                .build())
+                                        .price(new BigDecimal("11.25"))
+                                        .quantity(new BigDecimal("1.00"))
+                                        .saleType(SaleType.IMPORTED)
+                                        .build()
+                        )
+                        .build();
+
+        ReceiptDTO actualReceipt = service.calculateTaxes(givenShoppingBasket);
+        ReceiptDTO expectedReceipt =
+                ReceiptDTO.builder()
+                        .shoppingBasket(
+                                ShoppingBasketDTO.builder()
+                                        .item(
+                                                ShoppingBasketItemDTO.builder()
+                                                        .product(ProductDTO.builder()
+                                                                .name("Bottle of Perfume")
+                                                                .build())
+                                                        .price(new BigDecimal("32.19"))
+                                                        .quantity(new BigDecimal("1.00"))
+                                                        .saleType(SaleType.IMPORTED)
+                                                        .build()
+                                        )
+                                        .item(
+                                                ShoppingBasketItemDTO.builder()
+                                                        .product(ProductDTO.builder()
+                                                                .name("Bottle of Perfume")
+                                                                .build())
+                                                        .price(new BigDecimal("20.89"))
+                                                        .quantity(new BigDecimal("1.00"))
+                                                        .build()
+                                        )
+                                        .item(
+                                                ShoppingBasketItemDTO.builder()
+                                                        .product(ProductDTO.builder()
+                                                                .name("Packet of Headache Pills")
+                                                                .taxExemptionType(TaxExemptionType.EXEMPT)
+                                                                .build())
+                                                        .price(new BigDecimal("9.75"))
+                                                        .quantity(new BigDecimal("1.00"))
+                                                        .build()
+                                        )
+                                        .item(
+                                                ShoppingBasketItemDTO.builder()
+                                                        .product(ProductDTO.builder()
+                                                                .name("Box of Chocolate")
+                                                                .taxExemptionType(TaxExemptionType.EXEMPT)
+                                                                .build())
+                                                        .price(new BigDecimal("11.85"))
+                                                        .quantity(new BigDecimal("1.00"))
+                                                        .saleType(SaleType.IMPORTED)
+                                                        .build()
+                                        )
+                                        .build()
+                        )
+                        .salesTaxes(new BigDecimal("6.70"))
+                        .total(new BigDecimal("74.68"))
+                        .build();
+
+        Assertions.assertEquals(expectedReceipt, actualReceipt);
+
+
+    }
+
+    // Input 2
     @Test
     void givenShoppingBasketWithTwoImportedItems_whenCalculateTaxes_thenReturnReceipt() {
         ShoppingBasketDTO givenShoppingBasket =

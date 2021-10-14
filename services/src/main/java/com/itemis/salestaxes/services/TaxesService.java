@@ -47,7 +47,7 @@ public class TaxesService {
                 // Divide by 20
         return value.multiply(new BigDecimal("20.00"))
                 // Round up to the nearest integer
-                .setScale(0, RoundingMode.HALF_UP)
+                .setScale(0, RoundingMode.UP)
                 // Then divide by 20
                 .divide(new BigDecimal("20.00"));
     }
