@@ -1,13 +1,13 @@
 package com.itemis.salestaxes.services.dto;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.Singular;
+import lombok.*;
 
 import java.util.List;
 
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ShoppingBasketDTO {
 
     @Singular

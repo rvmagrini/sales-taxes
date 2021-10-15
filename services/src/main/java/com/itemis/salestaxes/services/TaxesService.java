@@ -4,10 +4,12 @@ import com.itemis.salestaxes.services.domain.SaleType;
 import com.itemis.salestaxes.services.domain.TaxExemptionType;
 import com.itemis.salestaxes.services.dto.ReceiptDTO;
 import com.itemis.salestaxes.services.dto.ShoppingBasketDTO;
+import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+@Service
 public class TaxesService {
 
     private BigDecimal baseTax = new BigDecimal("10.00");
