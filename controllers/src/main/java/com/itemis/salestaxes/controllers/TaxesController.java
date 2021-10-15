@@ -1,6 +1,7 @@
 package com.itemis.salestaxes.controllers;
 
 import com.itemis.salestaxes.services.TaxesService;
+import com.itemis.salestaxes.services.dto.ProductDTO;
 import com.itemis.salestaxes.services.dto.ReceiptDTO;
 import com.itemis.salestaxes.services.dto.ShoppingBasketDTO;
 import org.springframework.http.MediaType;
@@ -19,13 +20,31 @@ public class TaxesController {
         this.service = service;
     }
 
-    @RequestMapping(value = "//taxes/calculate", method = RequestMethod.POST,
+    @RequestMapping(value = "/taxes/calculate", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ReceiptDTO calculateTaxes(@RequestBody ShoppingBasketDTO shoppingBasket) {
+        ReceiptDTO receiptDTO = service.calculateTaxes(shoppingBasket);
+        printOutReceiptDetails(receiptDTO);
+        return receiptDTO;
+    }
 
-        return service.calculateTaxes(shoppingBasket);
+    private void printOutReceiptDetails(ReceiptDTO receiptDTO) {
+        System.out.println("============== RECEIPT ==============");
+        System.out.println("=====================================");
+        System.out.println("Qt: Product ................... Price");
+
+        for (ProductDTO product : receiptDTO.getShoppingBasket().getItems()) {
+            System.out.print(product.getQuantity() + " : ");
+            System.out.print(product.getName() + " : $");
+            System.out.println(product.getPrice());
+        }
+
+        System.out.println("=====================================");
+        System.out.println("> Sales Taxes: $" + receiptDTO.getSalesTaxes());
+        System.out.println("> Total: $" + receiptDTO.getTotal());
+        System.out.println("=====================================");
     }
 
 
