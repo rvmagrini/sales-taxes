@@ -11,7 +11,7 @@ import java.util.List;
 public class ShoppingBasketDTO {
 
     @Singular
-    private List<ShoppingBasketItemDTO> items;
+    private List<ProductDTO> items;
 
 
 }

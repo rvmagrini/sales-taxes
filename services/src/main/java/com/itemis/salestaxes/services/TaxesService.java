@@ -24,7 +24,7 @@ public class TaxesService {
                 item -> {
                     BigDecimal taxOnItem =
                             roundValue(item.getPrice()
-                                    .multiply((item.getProduct().getTaxExemptionType() == TaxExemptionType.EXEMPT ? BigDecimal.ZERO : baseTax)
+                                    .multiply((item.getTaxExemptionType() == TaxExemptionType.EXEMPT ? BigDecimal.ZERO : baseTax)
                                     .add(item.getSaleType() == SaleType.IMPORTED ? importTax : BigDecimal.ZERO))
                                     .divide(new BigDecimal("100.00")));
 
