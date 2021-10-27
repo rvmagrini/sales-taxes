@@ -20,7 +20,8 @@ public class TaxesController {
         this.service = service;
     }
 
-    @RequestMapping(value = "/taxes/calculate", method = RequestMethod.POST,
+    @RequestMapping(value = "/taxes/calculate",
+            method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody

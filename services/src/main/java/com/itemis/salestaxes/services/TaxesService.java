@@ -28,8 +28,11 @@ public class TaxesService {
                                     .add(item.getSaleType() == SaleType.IMPORTED ? importTax : BigDecimal.ZERO))
                                     .divide(new BigDecimal("100.00")));
 
-                    total[0] = total[0].add(item.getPrice().multiply(item.getQuantity()).add(taxOnItem));
-                    totalTax[0] = totalTax[0].add(taxOnItem);
+                    total[0] = total[0].add(item.getPrice().multiply(item.getQuantity())
+                            .add(taxOnItem.compareTo(BigDecimal.ZERO) > 0 ? taxOnItem.multiply(item.getQuantity()) : taxOnItem));
+
+                    totalTax[0] = totalTax[0].add(taxOnItem.compareTo(BigDecimal.ZERO) > 0 ? taxOnItem.multiply(item.getQuantity()) : taxOnItem);
+
                     item.setPrice(twoDecimalPlaces(item.getPrice().add(taxOnItem)));
                 }
         );
@@ -45,8 +48,9 @@ public class TaxesService {
         return value.setScale(2, RoundingMode.CEILING);
     }
 
+    // Rounding up to the nearest 0.05 amount
     private BigDecimal roundValue(BigDecimal value) {
-                // Divide by 20
+                // Multiply by 20
         return value.multiply(new BigDecimal("20.00"))
                 // Round up to the nearest integer
                 .setScale(0, RoundingMode.UP)
